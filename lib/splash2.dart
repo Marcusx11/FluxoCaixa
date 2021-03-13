@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:fluxo_caixa/controle/auth/cautentificacao.dart';
+import 'package:fluxo_caixa/login.dart';
+import 'package:fluxo_caixa/modelo/beans/autentificacao.dart';
 import 'package:fluxo_caixa/views/menu.dart';
 
-class Splash extends StatefulWidget {
+class Splash2 extends StatefulWidget {
   @override
-  _SplashState createState() => _SplashState();
+  _Splash2State createState() => _Splash2State();
 }
 
-class _SplashState extends State<Splash> {
+class _Splash2State extends State<Splash2> {
   @override
   void initState() {
     super.initState();
@@ -19,7 +22,7 @@ class _SplashState extends State<Splash> {
   }
 
   @override
-  // Constrói a tela do Splash
+  // Constrói a tela do Splash2
   Widget build(BuildContext context) {
     return Container(
       color: Colors.blue,
