@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
@@ -411,7 +412,7 @@ class _CadastroGastoState extends State<CadastroGasto> {
     _criaListaGastos();
   }
 
-  void _inserirGasto() {
+  void _inserirGasto() async {
     try {
       double valor = double.parse(this._tecValorMascara.text);
 
@@ -424,7 +425,12 @@ class _CadastroGastoState extends State<CadastroGasto> {
               this._tecHora.text,
           valor);
 
-      CGastos().insertGasto(g);
+      int id = await CGastos().insertGasto(g);
+
+      g.id = id;
+
+      // Inserindo gastos no Firebase
+      FirebaseFirestore.instance.collection("gasto").add(g.toMap());
 
       _criaListaGastos();
     } catch (e) {

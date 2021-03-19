@@ -47,7 +47,7 @@ class _LoginState extends State<Login> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(0.0, 15.5, 0.0, 10.1),
+            padding: EdgeInsets.fromLTRB(0.0, 20.5, 0.0, 10.1),
             child: Align(
               alignment: Alignment.center,
               child: Container(
@@ -130,8 +130,7 @@ class _LoginState extends State<Login> {
 
           // Botões da aplicação
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+            child: ListView(
               children: [this._loginButtons[0], this._loginButtons[1]],
             ),
           ),

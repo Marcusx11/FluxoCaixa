@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluxo_caixa/controle/crud/ctipo_gastos.dart';
 import 'package:fluxo_caixa/modelo/beans/tipo_gasto.dart';
@@ -106,9 +107,14 @@ class _CadastroTipoGastoState extends State<CadastroTipoGasto> {
   }
 
   // Método para inserção de tipos de gasto
-  void _insereTipoGasto() {
+  void _insereTipoGasto() async {
     TipoGasto g = TipoGasto(null, _nomeController.text, _descController.text);
-    CTipoGastos().insertTipoGasto(g);
+    int id = await CTipoGastos().insertTipoGasto(g);
+
+    g.id = id;
+
+    // Inserindo gastos no Firebase
+    FirebaseFirestore.instance.collection("tipo_gasto").add(g.toMap());
 
     setState(() {
       _setListView();

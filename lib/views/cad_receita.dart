@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
@@ -411,7 +412,7 @@ class _CadastroReceitaState extends State<CadastroReceita> {
     _criaListaReceitas();
   }
 
-  void _inserirReceita() {
+  void _inserirReceita() async {
     try {
       double valor = double.parse(this._tecValorMascara.text);
 
@@ -424,7 +425,12 @@ class _CadastroReceitaState extends State<CadastroReceita> {
               this._tecHora.text,
           valor);
 
-      CReceitas().insertReceita(g);
+      int id = await CReceitas().insertReceita(g);
+
+      g.id = id;
+
+      // Inserindo gastos no Firebase
+      FirebaseFirestore.instance.collection("receita").add(g.toMap());
 
       _criaListaReceitas();
     } catch (e) {

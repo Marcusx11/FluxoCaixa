@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluxo_caixa/controle/crud/ctipo_receitas.dart';
 import 'package:fluxo_caixa/modelo/beans/tipo_receita.dart';
@@ -106,10 +107,15 @@ class _CadastroTipoReceitaState extends State<CadastroTipoReceita> {
   }
 
   // Método para inserção de tipos de Receita
-  void _insereTipoReceita() {
+  void _insereTipoReceita() async {
     TipoReceita g =
         TipoReceita(null, _nomeController.text, _descController.text);
-    CTipoReceitas().insertTipoReceita(g);
+    int id = await CTipoReceitas().insertTipoReceita(g);
+
+    g.id = id;
+
+    // Inserindo gastos no Firebase
+    FirebaseFirestore.instance.collection("tipo_receita").add(g.toMap());
 
     setState(() {
       _setListView();

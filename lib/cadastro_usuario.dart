@@ -30,45 +30,51 @@ class _CadastroUsuarioState extends State<CadastroUsuario> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(top: 300),
-            child: TextField(
-              style: TextStyle(color: Colors.green),
-              decoration: InputDecoration(
-                  labelText: "Usuário",
-                  hintText: "Insira o nome do usuário",
-                  border: OutlineInputBorder()),
-              controller: _userController,
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 20.0),
+              child: TextField(
+                style: TextStyle(color: Colors.green),
+                decoration: InputDecoration(
+                    labelText: "Usuário",
+                    hintText: "Insira o nome do usuário",
+                    border: OutlineInputBorder()),
+                controller: _userController,
+              ),
             ),
-          ),
 
-          // Campo para digitar o nome de usuário
-          TextField(
-            style: TextStyle(color: Colors.green),
-            obscureText: true,
-            keyboardType: TextInputType.visiblePassword,
-            decoration: InputDecoration(
-                labelText: "Senha",
-                hintText: "Insira sua senha",
-                border: OutlineInputBorder()),
-            controller: _senhaController,
-          ),
+            // Campo para digitar o nome de usuário
+            Padding(
+              padding: EdgeInsets.only(top: 11.0),
+              child: TextField(
+                style: TextStyle(color: Colors.green),
+                obscureText: true,
+                keyboardType: TextInputType.visiblePassword,
+                decoration: InputDecoration(
+                    labelText: "Senha",
+                    hintText: "Insira sua senha",
+                    border: OutlineInputBorder()),
+                controller: _senhaController,
+              ),
+            ),
 
-          Padding(
-            padding: EdgeInsets.all(10.0),
-            child: this._registerButtons[0],
-          ),
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: this._registerButtons[0],
+            ),
 
-          Padding(
-            padding: EdgeInsets.all(10.0),
-            child: this._registerButtons[1],
-          )
-        ],
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: this._registerButtons[1],
+            )
+          ],
 
 
+        ),
       ),
     );
   }
