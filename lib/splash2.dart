@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluxo_caixa/controle/auth/cautentificacao.dart';
+import 'package:fluxo_caixa/controle/sync/c_sincroniza.dart';
 import 'package:fluxo_caixa/login.dart';
 import 'package:fluxo_caixa/modelo/beans/autentificacao.dart';
 import 'package:fluxo_caixa/views/menu.dart';
+import 'package:toast/toast.dart';
 
 class Splash2 extends StatefulWidget {
   @override
@@ -10,12 +12,23 @@ class Splash2 extends StatefulWidget {
 }
 
 class _Splash2State extends State<Splash2> {
+
+  sincronizacao() async {
+    await CSincronia().sincronizaDados();
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Menu(opcao: 0)));
+  }
+
   @override
   void initState() {
     super.initState();
 
+
     // Vai mostrar a tela construída no método Build durante "3" segundos
-    Future.delayed(Duration(seconds: 3)).then((_) {
+    Future.delayed(Duration(seconds: 3)).then((_) async {
+
+      await sincronizacao();
+
+      Toast.show("Não Sincronizado", context, duration: 3);
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Menu(opcao: 0)));
     });
