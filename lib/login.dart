@@ -1,6 +1,8 @@
+import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:fluxo_caixa/cadastro_usuario.dart';
 import 'package:fluxo_caixa/controle/auth/cautentificacao.dart';
 import 'package:fluxo_caixa/modelo/beans/autentificacao.dart';
@@ -76,13 +78,36 @@ class _LoginState extends State<Login> {
           ),
 
           // Campo para digitar o nome de usuário
-          TextField(
-            style: TextStyle(color: Colors.green),
-            decoration: InputDecoration(
-                labelText: "Usuário",
-                hintText: "Insira o nome do usuário",
-                border: OutlineInputBorder()),
-            controller: _userController,
+          Row(
+            children: [
+              Container(
+                width: 300,
+                child: TextField(
+                  style: TextStyle(color: Colors.green),
+                  decoration: InputDecoration(
+                      labelText: "Usuário",
+                      hintText: "Insira o nome do usuário",
+                      border: OutlineInputBorder()),
+                  controller: _userController,
+                ),
+              ),
+              ButtonTheme(
+                height: 60.0,
+                child: FlatButton(
+                  onPressed: () {
+                    setState(() {
+                      _openQRCode();
+                    });
+                  },
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(15.0)),
+                  child: Text(
+                    "Scan QR",
+                    style: TextStyle(color: Colors.blueGrey, fontSize: 18),
+                  ),
+                ),
+              )
+            ],
           ),
 
           Opacity(
@@ -139,6 +164,52 @@ class _LoginState extends State<Login> {
     );
   }
 
+  // Método para abrir um popup com um QRCode
+  void _openQRCode() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+                content: BarcodeWidget(
+                  barcode: Barcode.qrCode(),
+                  color: Colors.blueGrey,
+                  data: "marcus",
+                  width: 100,
+                  height: 100,
+                ),
+                actions: [
+                  // Scannear o QRCode
+                  FlatButton(
+                    onPressed: () => _scanQRCode(),
+                    child: Text("Scannear"),
+                  ),
+
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text("Sair"),
+                  )
+                ]));
+  }
+
+  Future<void> _scanQRCode() async {
+    try {
+      final qrCode = await FlutterBarcodeScanner.scanBarcode(
+          "#ff6666", "Cancelar", true, ScanMode.QR);
+
+      setState(() {
+        this._userController.text = qrCode;
+      });
+
+      print(qrCode);
+
+      Navigator.pop(context);
+    } on PlatformException {
+      this._userController.text = "Erro em capturar o nome no campo";
+    }
+  }
+
   // Faz os botões aparecerem
   void _apareceBotoes() {
     setState(() {
@@ -181,7 +252,8 @@ class _LoginState extends State<Login> {
 
   // Chama interface de cadastro de usuário
   void _onCadUser() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => CadastroUsuario()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => CadastroUsuario()));
   }
 
   void _onClickLogin() {

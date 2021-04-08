@@ -113,9 +113,21 @@ class _MenuState extends State<Menu> {
               arrowColor: Colors.teal,
             ),
 
-            // Lista de opções do Drawer
             ListTile(
               leading: Icon(Icons.home),
+              title: Text("Página Principal"),
+              subtitle: Text("Tela Principal"),
+              trailing: Icon(Icons.navigate_next),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => Menu(opcao: 0)
+                ));
+              },
+            ),
+
+            // Lista de opções do Drawer
+            ListTile(
+              leading: Icon(Icons.attach_money),
               title: Text("Tipos de Gastos"),
               subtitle: Text("Tela dos Tipos de Gastos"),
               trailing: Icon(Icons.navigate_next),
@@ -127,7 +139,7 @@ class _MenuState extends State<Menu> {
             ),
 
             ListTile(
-              leading: Icon(Icons.home),
+              leading: Icon(Icons.monetization_on),
               title: Text("Tipos de Receitas"),
               subtitle: Text("Tela dos Tipos de Receitas"),
               trailing: Icon(Icons.navigate_next),
@@ -139,7 +151,7 @@ class _MenuState extends State<Menu> {
             ),
 
             ListTile(
-              leading: Icon(Icons.home),
+              leading: Icon(Icons.receipt),
               title: Text("Relatórios"),
               subtitle: Text("Tela dos Relatórios"),
               trailing: Icon(Icons.navigate_next),

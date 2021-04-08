@@ -9,6 +9,7 @@ void main() async {
   await Firebase.initializeApp();
 
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
     title: "Fluxo de Caixa",
     home: Splash1(),
   ));

@@ -28,7 +28,6 @@ class _Splash2State extends State<Splash2> {
 
       await sincronizacao();
 
-      Toast.show("Não Sincronizado", context, duration: 3);
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Menu(opcao: 0)));
     });
